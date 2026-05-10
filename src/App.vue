@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import Drawer from "./components/Drawer.vue";
     import IconHamburger from "./components/icons/IconHamburger.vue";
 
     function ChangeTheme() {
@@ -8,9 +9,10 @@
 
 <template>
     <div class="main-wrapper">
-        <button class="hamburger">
+        <Drawer />
+        <!-- <button class="hamburger">
             <IconHamburger />
-        </button>
+        </button> -->
     </div>
 </template>
 

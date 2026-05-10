@@ -1,3 +1,9 @@
+:root {
+    --test: light-dark(#6d28d9, #5a3f8a)
+}
+
+$purple-highlight-test: var(--test);
+
 $bg-primary: light-dark(#f4f7fb, #0f0f1a);
 $bg-secondary: light-dark(#ffffff, #1a1a2e);
 $bg-tertiary: light-dark(#edf2f8, #252541);
