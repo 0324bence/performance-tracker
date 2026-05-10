@@ -1,0 +1,11 @@
+@use './variables' as *;
+
+body {
+    color-scheme: dark;
+    background-color: $bg-primary;
+    color: $text-primary;
+}
+
+h1 {
+    color: $text-primary;
+}

@@ -1,47 +1,51 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+    import IconHamburger from "./components/icons/IconHamburger.vue";
+
+    function ChangeTheme() {
+        document.body.style.colorScheme = document.body.style.colorScheme === "dark" ? "light" : "dark";
+    }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div class="main-wrapper">
+        <button class="hamburger">
+            <IconHamburger />
+        </button>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<style lang="scss" scoped>
+    @use "@/assets/variables.scss" as *;
+    @use "sass:color";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+    .main-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+    .hamburger {
+        position: fixed;
+        left: 16px;
+        top: 16px;
+        z-index: 1300;
+        width: 48px;
+        height: 48px;
+        border: 1px solid $border-color;
+        border-radius: 14px;
+        background: linear-gradient(180deg, $bg-secondary, $bg-primary);
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        padding: 8px;
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+        &:hover {
+            filter: brightness(150%);
+        }
+    }
 </style>
