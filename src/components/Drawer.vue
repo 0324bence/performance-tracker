@@ -11,9 +11,11 @@
         (e: "close"): void;
     }>();
 
-    //watcher isopen
+    //refs
     const isOpenDelayed = ref(props.isOpen);
     const delayDuration = 300; //ms
+
+    const isModalOpen = ref(false);
 
     watch(
         () => props.isOpen,
@@ -24,6 +26,7 @@
         }
     );
 
+    //functions
     function closeDrawer() {
         emit("close");
     }
@@ -42,7 +45,7 @@
 
 <template>
     <div ref="drawer" class="drawer" :class="{ closed: !props.isOpen }">
-        <!-- <TaskListModal :isOpen="true" /> -->
+        <TaskListModal :isOpen="isModalOpen" @close="isModalOpen = false" />
         <div class="header">
             <div class="texts">
                 <p>Archívum</p>
@@ -54,7 +57,7 @@
                 </button>
             </div>
         </div>
-        <div class="content"><p>1</p></div>
+        <div class="content"><button @click="isModalOpen = true">Open Task List</button></div>
         <div class="actions"></div>
     </div>
 </template>
