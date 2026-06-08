@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import Drawer from "./components/Drawer.vue";
     import IconHamburger from "./components/icons/IconHamburger.vue";
+    import TaskListModal from "./components/TaskListModal.vue";
 
     function ChangeTheme() {
         document.body.style.colorScheme = document.body.style.colorScheme === "dark" ? "light" : "dark";
@@ -9,7 +10,8 @@
 
 <template>
     <div class="main-wrapper">
-        <Drawer />
+        <!-- <Drawer /> -->
+        <TaskListModal />
         <!-- <button class="hamburger">
             <IconHamburger />
         </button> -->
