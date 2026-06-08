@@ -1,16 +1,55 @@
 <script setup lang="ts">
+    import { ref, useTemplateRef, watch } from "vue";
     import IconCross from "./icons/IconCross.vue";
+    import TaskListModal from "./TaskListModal.vue";
+
+    const props = defineProps<{
+        isOpen: boolean;
+    }>();
+
+    const emit = defineEmits<{
+        (e: "close"): void;
+    }>();
+
+    //watcher isopen
+    const isOpenDelayed = ref(props.isOpen);
+    const delayDuration = 300; //ms
+
+    watch(
+        () => props.isOpen,
+        newVal => {
+            setTimeout(() => {
+                isOpenDelayed.value = newVal;
+            }, delayDuration);
+        }
+    );
+
+    function closeDrawer() {
+        emit("close");
+    }
+
+    const drawer = useTemplateRef("drawer");
+
+    window.addEventListener("click", function (e: MouseEvent) {
+        if (drawer!.value!.contains(e.target as Node)) {
+        } else {
+            if (isOpenDelayed.value) {
+                closeDrawer();
+            }
+        }
+    });
 </script>
 
 <template>
-    <div class="drawer">
+    <div ref="drawer" class="drawer" :class="{ closed: !props.isOpen }">
+        <!-- <TaskListModal :isOpen="true" /> -->
         <div class="header">
             <div class="texts">
                 <p>Archívum</p>
                 <h2>Mentett műszakok</h2>
             </div>
             <div class="header-actions">
-                <button class="close">
+                <button class="close" @click="closeDrawer">
                     <IconCross />
                 </button>
             </div>
@@ -25,6 +64,10 @@
     @use "sass:color";
 
     .drawer {
+        &.closed {
+            transform: translateX(-100%);
+        }
+
         position: fixed;
         left: 0;
         top: 0;
@@ -32,12 +75,13 @@
         width: 25rem;
         background: linear-gradient(0deg, $bg-secondary, $bg-primary);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-        z-index: 1200;
+        z-index: 10;
 
         display: flex;
         flex-direction: column;
         align-items: stretch;
         justify-content: center;
+        transition: all 0.3s ease;
 
         .header {
             padding: 18px 18px 14px;

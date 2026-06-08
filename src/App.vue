@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { ref, useTemplateRef } from "vue";
     import Drawer from "./components/Drawer.vue";
     import IconHamburger from "./components/icons/IconHamburger.vue";
     import TaskListModal from "./components/TaskListModal.vue";
@@ -6,15 +7,17 @@
     function ChangeTheme() {
         document.body.style.colorScheme = document.body.style.colorScheme === "dark" ? "light" : "dark";
     }
+
+    const isDrawerOpen = ref(false);
 </script>
 
 <template>
     <div class="main-wrapper">
-        <!-- <Drawer /> -->
-        <TaskListModal />
-        <!-- <button class="hamburger">
+        <button class="hamburger" @click="isDrawerOpen = !isDrawerOpen">
             <IconHamburger />
-        </button> -->
+        </button>
+        <Drawer :isOpen="isDrawerOpen" @close="isDrawerOpen = false" />
+        <!-- <TaskListModal /> -->
     </div>
 </template>
 
@@ -34,7 +37,7 @@
         position: fixed;
         left: 16px;
         top: 16px;
-        z-index: 1300;
+        z-index: 5;
         width: 48px;
         height: 48px;
         border: 1px solid $border-color;
