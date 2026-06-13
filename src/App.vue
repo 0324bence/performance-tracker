@@ -3,12 +3,15 @@
     import Drawer from "./components/Drawer.vue";
     import IconHamburger from "./components/icons/IconHamburger.vue";
     import IconSun from "./components/icons/IconSun.vue";
+    import IconQuestionCircle from "./components/icons/IconQuestionCircle.vue";
+    import IconGithub from "./components/icons/IconGithub.vue";
+
+    const isDrawerOpen = ref(false);
+    const isTooltipVisible = ref(false);
 
     function ChangeTheme() {
         document.body.style.colorScheme = document.body.style.colorScheme === "dark" ? "light" : "dark";
     }
-
-    const isDrawerOpen = ref(false);
 </script>
 
 <template>
@@ -21,6 +24,26 @@
         <button id="themeToggleBtn" class="theme-toggle" title="Téma váltás" @click="ChangeTheme">
             <IconSun />
         </button>
+
+        <div class="extras">
+            <button class="openQuestion" @mouseenter="isTooltipVisible = true" @mouseleave="isTooltipVisible = false">
+                <IconQuestionCircle />
+                <Transition>
+                    <div class="tooltip" v-if="isTooltipVisible">
+                        <p>
+                            Az applikáció egy teljesítménykövető eszköz, amely lehetővé teszi a felhasználók számára,
+                            hogy nyomon kövessék és elemezzék a különböző tevékenységeiket és teljesítményüket.
+                        </p>
+                        <p>
+                            A kezdéshez nyisd meg a bal felső sarokban található menüt, majd adj hozzá új feladatlistát.
+                        </p>
+                    </div>
+                </Transition>
+            </button>
+            <a class="github" href="https://github.com/0324bence/performance-tracker">
+                <IconGithub />
+            </a>
+        </div>
     </div>
 </template>
 
@@ -34,6 +57,80 @@
         align-items: center;
         height: 100vh;
         width: 100%;
+    }
+
+    .extras {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        button,
+        a {
+            background: none;
+            border: none;
+            outline: none;
+            width: 35px;
+            height: 35px;
+        }
+
+        .openQuestion {
+            color: $text-tertiary;
+
+            svg {
+                opacity: 0.3;
+            }
+
+            &:hover svg {
+                opacity: 0.4;
+            }
+
+            .v-enter-active,
+            .v-leave-active {
+                transition: opacity 0.2s ease-in-out;
+            }
+
+            .v-enter-from,
+            .v-leave-to {
+                opacity: 0;
+            }
+
+            .tooltip {
+                position: absolute;
+                bottom: 100%;
+                right: 0;
+                // margin-bottom: 8px;
+                padding: 8px;
+                background-color: $bg-secondary;
+                color: $text-primary;
+                border-radius: 4px;
+                font-size: 14px;
+                line-height: 1.4;
+                white-space: nowrap;
+                // pointer-events: none;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                width: 20rem;
+                white-space: wrap;
+                text-align: left;
+            }
+        }
+
+        .github {
+            color: $text-primary;
+            svg {
+                opacity: 0.3;
+            }
+
+            &:hover svg {
+                opacity: 0.4;
+            }
+
+            &:visited {
+                color: $text-primary;
+            }
+        }
     }
 
     .theme-toggle {
@@ -52,6 +149,7 @@
         cursor: pointer;
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
         transition: all 0.2s ease;
+        padding: 8px;
 
         &:hover {
             transform: translateY(-1px);
