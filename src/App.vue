@@ -25,6 +25,8 @@
             <IconSun />
         </button>
 
+        <h1 class="noWork">Nincs kiválasztott műszak</h1>
+
         <div class="extras">
             <button class="openQuestion" @mouseenter="isTooltipVisible = true" @mouseleave="isTooltipVisible = false">
                 <IconQuestionCircle />
