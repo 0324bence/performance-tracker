@@ -5,6 +5,15 @@
     import IconSun from "./components/icons/IconSun.vue";
     import IconQuestionCircle from "./components/icons/IconQuestionCircle.vue";
     import IconGithub from "./components/icons/IconGithub.vue";
+    import fs from "./stores/fileSystem";
+    import { getFileSystemAccess } from "./stores/fileSystem";
+
+    const isLoading = ref(true);
+    async function initFileSystem() {
+        await getFileSystemAccess();
+        isLoading.value = false;
+    }
+    initFileSystem();
 
     const isDrawerOpen = ref(false);
     const isTooltipVisible = ref(false);
@@ -15,7 +24,10 @@
 </script>
 
 <template>
-    <div class="main-wrapper">
+    <div v-if="isLoading" class="main-wrapper">
+        <p>Loading...</p>
+    </div>
+    <div v-else class="main-wrapper">
         <button class="hamburger" @click="isDrawerOpen = !isDrawerOpen">
             <IconHamburger />
         </button>
