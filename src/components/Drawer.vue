@@ -105,6 +105,7 @@
                     letter-spacing: 0.14em;
                     text-transform: uppercase;
                     color: $text-tertiary;
+                    margin-left: 1px;
                 }
 
                 h2 {
