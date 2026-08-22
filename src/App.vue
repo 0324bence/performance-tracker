@@ -151,7 +151,7 @@
         position: fixed;
         right: 16px;
         top: 16px;
-        z-index: 1300;
+        z-index: 10;
         width: 48px;
         height: 48px;
         border: 1px solid $border-color;

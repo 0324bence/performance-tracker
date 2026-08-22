@@ -87,7 +87,7 @@
         width: 25rem;
         background: linear-gradient(0deg, $bg-secondary, $bg-primary);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-        z-index: 10;
+        z-index: 15;
 
         display: flex;
         flex-direction: column;
