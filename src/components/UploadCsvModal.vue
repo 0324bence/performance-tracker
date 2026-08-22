@@ -10,33 +10,9 @@
         (e: "close"): void;
     }>();
 
-    const modal = useTemplateRef("modal");
-
-    //watcher isopen
-    const isOpenDelayed = ref(props.isOpen);
-    const delayDuration = 300; //ms
-
-    watch(
-        () => props.isOpen,
-        newVal => {
-            setTimeout(() => {
-                isOpenDelayed.value = newVal;
-            }, delayDuration);
-        }
-    );
-
     function closeModal() {
         emit("close");
     }
-
-    window.addEventListener("click", function (e: MouseEvent) {
-        if (modal!.value!.contains(e.target as Node)) {
-        } else {
-            if (isOpenDelayed.value) {
-                closeModal();
-            }
-        }
-    });
 </script>
 
 <template>
@@ -71,7 +47,7 @@
 
                     <div class="modal-actions">
                         <button id="importTasksBtn" class="btn btn-primary" type="button">Importálás</button>
-                        <button id="closeBottomBtn" class="btn btn-danger" type="button">Bezárás</button>
+                        <!-- <button id="closeBottomBtn" class="btn btn-danger" type="button">Bezárás</button> -->
                     </div>
                 </div>
 
