@@ -13,11 +13,3 @@
         <path d="M5 12h14"></path>
     </svg>
 </template>
-
-<style lang="scss" scoped>
-    @use "@/assets/variables.scss" as *;
-
-    .icon-hamburger {
-        color: $purple-highlight;
-    }
-</style>
