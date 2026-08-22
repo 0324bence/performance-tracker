@@ -5,12 +5,11 @@
     import IconSun from "./components/icons/IconSun.vue";
     import IconQuestionCircle from "./components/icons/IconQuestionCircle.vue";
     import IconGithub from "./components/icons/IconGithub.vue";
-    import fs from "./stores/fileSystem";
-    import { getFileSystemAccess } from "./stores/fileSystem";
+    import fs from "@/stores/fileSystem";
 
     const isLoading = ref(true);
     async function initFileSystem() {
-        await getFileSystemAccess();
+        await fs.getFileSystemAccess();
         isLoading.value = false;
     }
     initFileSystem();

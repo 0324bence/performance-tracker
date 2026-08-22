@@ -3,6 +3,7 @@
     import IconCross from "./icons/IconCross.vue";
     import UploadCsvModal from "./UploadCsvModal.vue";
     import NewOrUploadModal from "./NewOrUploadModal.vue";
+    import fs from "@/stores/fileSystem";
 
     const props = defineProps<{
         isOpen: boolean;
@@ -19,9 +20,13 @@
     const isChooseModalOpen = ref(false);
     const isUploadModalOpen = ref(false);
 
+    const categories = ref<string[]>([]);
+    const isLoading = ref(categories.value.length === 0);
+
     watch(
         () => props.isOpen,
         newVal => {
+            if (newVal) getCategories();
             setTimeout(() => {
                 isOpenDelayed.value = newVal;
             }, delayDuration);
@@ -29,6 +34,13 @@
     );
 
     //functions
+    async function getCategories() {
+        isLoading.value = true;
+        categories.value = await fs.getCategories();
+        console.log("categories: ", categories.value);
+        isLoading.value = false;
+    }
+
     function closeDrawer() {
         emit("close");
     }
@@ -36,6 +48,22 @@
     function openUploadModal() {
         isChooseModalOpen.value = false;
         isUploadModalOpen.value = true;
+    }
+
+    async function createNewCategory() {
+        await fs.createCategory("Kategória");
+        isChooseModalOpen.value = false;
+        getCategories();
+    }
+
+    //dev functions
+    async function resetStorage() {
+        await fs.resetStorage();
+        getCategories();
+    }
+
+    function printFileSystemStructure() {
+        fs.printFileSystemStructure();
     }
 
     const drawer = useTemplateRef("drawer");
@@ -56,6 +84,7 @@
             :isOpen="isChooseModalOpen"
             @close="isChooseModalOpen = false"
             @upload-data="openUploadModal"
+            @create-new="createNewCategory"
         />
         <UploadCsvModal :isOpen="isUploadModalOpen" @close="isUploadModalOpen = false" />
         <div class="header">
@@ -71,15 +100,34 @@
         </div>
         <div class="content">
             <!-- <button @click="isModalOpen = true">Open Task List</button> -->
-
             <!-- Temporary design, may be replaced with a more appropriate component -->
+            <!-- TODO: create design for categories, split categories into component  -->
+
+            <div class="new-category" v-if="isLoading">
+                <hr />
+                <span>Betöltés...</span>
+                <hr />
+            </div>
+            <div class="new-category" v-else-if="categories.length === 0">
+                <hr />
+                <span>Nincsenek mentett műszakok</span>
+                <hr />
+            </div>
+            <div class="new-category" v-else v-for="category in categories" :key="category">
+                <hr />
+                <span>{{ category }}</span>
+                <hr />
+            </div>
             <button class="new-category" @click="isChooseModalOpen = true">
                 <hr />
                 <span>Új kategória</span>
                 <hr />
             </button>
         </div>
-        <div class="actions"></div>
+        <div class="actions">
+            <button @click="printFileSystemStructure">test</button>
+            <button @click="resetStorage">reset</button>
+        </div>
     </div>
 </template>
 
@@ -167,6 +215,7 @@
             align-items: stretch;
             justify-content: flex-start;
             padding: 1rem 0.5rem;
+            gap: 0.5rem;
 
             .new-category {
                 display: flex;
