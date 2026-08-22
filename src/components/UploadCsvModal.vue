@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { ref, useTemplateRef, watch } from "vue";
     import IconCross from "./icons/IconCross.vue";
-    import TaskListModal from "./TaskListModal.vue";
 
     const props = defineProps<{
         isOpen: boolean;

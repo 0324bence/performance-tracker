@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref, useTemplateRef, watch } from "vue";
     import IconCross from "./icons/IconCross.vue";
-    import TaskListModal from "./TaskListModal.vue";
+    import UploadCsvModal from "./UploadCsvModal.vue";
 
     const props = defineProps<{
         isOpen: boolean;
@@ -45,7 +45,7 @@
 
 <template>
     <div ref="drawer" class="drawer" :class="{ closed: !props.isOpen }">
-        <TaskListModal :isOpen="isModalOpen" @close="isModalOpen = false" />
+        <UploadCsvModal :isOpen="isModalOpen" @close="isModalOpen = false" />
         <div class="header">
             <div class="texts">
                 <p>Archívum</p>
