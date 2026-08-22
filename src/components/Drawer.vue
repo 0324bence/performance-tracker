@@ -57,7 +57,16 @@
                 </button>
             </div>
         </div>
-        <div class="content"><button @click="isModalOpen = true">Open Task List</button></div>
+        <div class="content">
+            <!-- <button @click="isModalOpen = true">Open Task List</button> -->
+
+            <!-- Temporary design, may be replaced with a more appropriate component -->
+            <button class="new-category" @click="isModalOpen = true">
+                <hr />
+                <span>Új kategória</span>
+                <hr />
+            </button>
+        </div>
         <div class="actions"></div>
     </div>
 </template>
@@ -100,9 +109,8 @@
                 gap: 8px;
 
                 p {
-                    // font-size: 0.875rem;
-                    font-size: 0.78rem;
-                    letter-spacing: 0.14em;
+                    font-size: 0.8rem;
+                    letter-spacing: 0.1rem;
                     text-transform: uppercase;
                     color: $text-tertiary;
                     margin-left: 1px;
@@ -142,6 +150,45 @@
 
         .content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            padding: 1rem 0.5rem;
+
+            .new-category {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                border: none;
+                background: none;
+                outline: none;
+                cursor: pointer;
+                transition: filter 0.3s;
+
+                hr {
+                    flex: 1;
+                    height: 1px;
+                    border: none;
+                    background-color: $text-tertiary;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05rem;
+                    color: $text-tertiary;
+                }
+
+                &:hover {
+                    filter: brightness(70%);
+                }
+
+                &:active {
+                    filter: brightness(50%);
+                }
+            }
         }
 
         .actions {
