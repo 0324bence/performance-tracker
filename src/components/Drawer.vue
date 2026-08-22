@@ -2,6 +2,7 @@
     import { ref, useTemplateRef, watch } from "vue";
     import IconCross from "./icons/IconCross.vue";
     import UploadCsvModal from "./UploadCsvModal.vue";
+    import NewOrUploadModal from "./NewOrUploadModal.vue";
 
     const props = defineProps<{
         isOpen: boolean;
@@ -13,9 +14,10 @@
 
     //refs
     const isOpenDelayed = ref(props.isOpen);
-    const delayDuration = 300; //ms
+    const delayDuration = 300; //ms, delay to not close the drawer immediately
 
-    const isModalOpen = ref(false);
+    const isChooseModalOpen = ref(false);
+    const isUploadModalOpen = ref(false);
 
     watch(
         () => props.isOpen,
@@ -29,6 +31,11 @@
     //functions
     function closeDrawer() {
         emit("close");
+    }
+
+    function openUploadModal() {
+        isChooseModalOpen.value = false;
+        isUploadModalOpen.value = true;
     }
 
     const drawer = useTemplateRef("drawer");
@@ -45,7 +52,12 @@
 
 <template>
     <div ref="drawer" class="drawer" :class="{ closed: !props.isOpen }">
-        <UploadCsvModal :isOpen="isModalOpen" @close="isModalOpen = false" />
+        <NewOrUploadModal
+            :isOpen="isChooseModalOpen"
+            @close="isChooseModalOpen = false"
+            @upload-data="openUploadModal"
+        />
+        <UploadCsvModal :isOpen="isUploadModalOpen" @close="isUploadModalOpen = false" />
         <div class="header">
             <div class="texts">
                 <p>Archívum</p>
@@ -61,7 +73,7 @@
             <!-- <button @click="isModalOpen = true">Open Task List</button> -->
 
             <!-- Temporary design, may be replaced with a more appropriate component -->
-            <button class="new-category" @click="isModalOpen = true">
+            <button class="new-category" @click="isChooseModalOpen = true">
                 <hr />
                 <span>Új kategória</span>
                 <hr />

@@ -17,7 +17,7 @@
 
 <template>
     <div ref="modal" id="uploadModal" class="modal" :class="{ closed: !props.isOpen }">
-        <div id="modalOverlay" class="modal-overlay"></div>
+        <div id="modalOverlay" class="modal-overlay" @click="closeModal"></div>
         <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle">
             <div class="modal-header">
                 <h3 id="uploadModalTitle">Feladatok importálása</h3>
@@ -103,7 +103,7 @@ Csapatmegbeszélés,60
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        transition: all 0.3s ease;
+        // transition: all 0.3s ease;
 
         &.closed {
             opacity: 0;
